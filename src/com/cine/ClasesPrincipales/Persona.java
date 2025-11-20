@@ -9,15 +9,15 @@ public abstract class Persona {
     private String contraseña;
     private String correo;
     private String celular;
+    private String edad;
 
     public Persona() {
-
         this.nombre = "Si ves esto es pq algo hicimos mal:c";
-
     }
 
-    public Persona(String nombre, String apellidoPaterno, String apellidoMaterno, String nickname, String contraseña,
-            String correo, String celular) {
+    public Persona(String nombre, String apellidoPaterno, String apellidoMaterno,
+                   String nickname, String contraseña, String correo,
+                   String celular, String edad) {
 
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
@@ -26,7 +26,9 @@ public abstract class Persona {
         this.contraseña = contraseña;
         this.correo = correo;
         this.celular = celular;
-
+        this.edad = edad;
     }
 
 }
+
+
