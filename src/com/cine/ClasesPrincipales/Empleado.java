@@ -11,4 +11,13 @@ public class Empleado extends Persona {
         super(nombre, apellidoPaterno, apellidoMaterno, nickname, contraseña, correo, celular, edad);
         this.turno = turno;
     }
+
+    public String getTurno() {
+        return turno;
+    }
+
+    public void setTurno(String turno) {
+        this.turno = turno;
+    }
+
 }
