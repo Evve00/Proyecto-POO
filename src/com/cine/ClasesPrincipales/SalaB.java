@@ -35,7 +35,7 @@ public class SalaB extends Sala {
         }
 
         for (int a = 0; a < filas2; a++) {
-            char fila = (char) ('A' + a);
+            char fila = (char) ('E' + a);
             for (int b = 1; b <= columnas2; b++) {
                 asientos.add(fila + String.valueOf(b));
             }

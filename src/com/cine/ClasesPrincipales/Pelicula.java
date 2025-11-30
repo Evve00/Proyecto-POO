@@ -53,10 +53,6 @@ public class Pelicula {
         return duracion;
     }
 
-    public String toFileString() {
-        return nombreDeLaPelicula + "|" + generos + "|" + sinopsis + "|" + duracion;
-    }
-
     public String toString() {
         return "Pelicula:" + nombreDeLaPelicula + "\n" + "Generos:" + generos + "\n" + "Sinopsis:" + sinopsis + "\n"
                 + "Duración:" + duracion;

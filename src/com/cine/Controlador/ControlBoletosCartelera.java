@@ -5,11 +5,11 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
-public class Control {
+public class ControlBoletosCartelera {
     private List<Pelicula> peliculas;
     private List<Funcion> funciones;
 
-    public Control() {
+    public ControlBoletosCartelera() {
         peliculas = new ArrayList<>();
         funciones = new ArrayList<>();
     }
@@ -67,8 +67,8 @@ public class Control {
      * @param LocalDate recibe una fecha de tipo LocalDate
      * @param LocalTime recibe un horario de tipo LocalTime
      */
-    public boolean registrarFuncion(Pelicula pelicula, Sala sala,
-            LocalDate fecha, LocalTime hora) {
+    public void registrarFuncion(Pelicula pelicula, Sala sala,
+            LocalDate fecha, LocalTime hora) throws ExcepcionFunciones {
 
         // 1. Valida que no choque con horarios existentes
         for (Funcion f : funciones) {
@@ -79,8 +79,7 @@ public class Control {
                 int diff = Math.abs(f.getHorario().toSecondOfDay() - hora.toSecondOfDay()) / 60;
 
                 if (diff < 30) {
-                    System.out.println("ERROR: Debe haber 30 minutos entre funciones.");
-                    return false;
+                    throw new ExcepcionFunciones();
                 }
             }
         }
@@ -93,9 +92,9 @@ public class Control {
                 hora);
 
         funciones.add(nueva);
+        GestorArchivosFunciones.guardarFuncionesPorFecha(fecha, funciones);
 
         System.out.println("Función registrada con éxito.");
-        return true;
     }
 
     /**
@@ -164,21 +163,32 @@ public class Control {
      */
 
     public boolean comprarBoletos(Funcion funcion, String asientoSeleccionados) {
-        // limpia espacios de inicio y fin
         asientoSeleccionados = asientoSeleccionados.trim();
-        // divide la cadena en donde encuentra espacios, no impota cuantos espacios
-        String[] asientosSeparados = asientoSeleccionados.split("\\s+");
+        String[] asientos = asientoSeleccionados.split("\\s+");
 
-        for (String asiento : asientosSeparados) {
-            boolean vendido = funcion.venderBoleto(asiento);
-
-            if (!vendido) {
-                System.out.println("El asiento " + asiento + " no está disponible.");
+        // Primero se validan todos los boletos
+        for (String asiento : asientos) {
+            if (!funcion.estaDisponible(asiento)) {
+                System.out.println("El asiento " + asiento + " ya está vendido.");
                 return false;
             }
         }
 
+        // SI no hay vendidos, se venden todos
+        for (String asiento : asientos) {
+            funcion.venderBoleto(asiento);
+        }
+
         return true;
+    }
+    // Metodos get
+
+    public List<Funcion> getFunciones() {
+        return funciones;
+    }
+
+    public List<Pelicula> getPeliculas() {
+        return peliculas;
     }
 
 }
