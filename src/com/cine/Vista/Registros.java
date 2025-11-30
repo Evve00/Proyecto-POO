@@ -1,4 +1,5 @@
-package com.cine.ClasesPrincipales;
+package com.cine.Vista;
+import com.cine.ClasesPrincipales.Cliente;
 import java.io.*;
 public class Registros{
     public void Registro(Cliente unCliente){
