@@ -21,15 +21,17 @@ public class SalaVip extends Sala {
      * Crea la cantidad de asientos de la sala VIP
      */
     public List<String> getAsientos() {
-        List<String> asientos = new ArrayList<>();
+        List<String> listaNombres = new ArrayList<>();
 
         for (int x = 0; x < filas; x++) {
-            char fila = (char) ('A' + x);
+            char letraFila = (char) ('A' + x); // 0='A', 1='B', etc.
+
             for (int y = 1; y <= columnas; y++) {
-                asientos.add(fila + String.valueOf(y));
+                // Concatena Letra + Número (ej: "A1")
+                listaNombres.add(letraFila + String.valueOf(y));
             }
         }
-        return asientos;
+        return listaNombres;
     }
 
     public double getPrecio() {

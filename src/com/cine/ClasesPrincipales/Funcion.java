@@ -128,6 +128,20 @@ public class Funcion {
         return false;
     }
 
+    public boolean estaDisponible(String asiento) {
+
+        // Revisa que todos los boletos no esten vendidos
+        for (Boleto b : boletosVendidos) {
+            if (b.getAsiento().equals(asiento)) {
+                // Si encontramos un asiento igual se cancela todo
+                return false;
+            }
+        }
+
+        // Si no encuentra ninguno en vendidos se procede a comprar todos los boletos
+        return true;
+    }
+
     /**
      * Metodos get
      * 
@@ -149,6 +163,10 @@ public class Funcion {
         return this.sala;
     }
 
+    public double getPrecio() {
+        return this.precio;
+    }
+
     public Pelicula getPelicula() {
         return this.pelicula;
     }
@@ -156,6 +174,20 @@ public class Funcion {
     public String toString() {
         return "Pelicula:" + pelicula.getNombreDeLaPelicula() + "\n" + "Sala:" + sala.getTipoDeSala() + "\n" + "Fecha:"
                 + fecha + "\n" + "Horario de inicio:" + horario;
+    }
+
+    public List<Boleto> getBoletosTotales() {
+        return boletosTotales;
+    }
+
+    public List<Boleto> getBoletosVendidos() {
+        return boletosVendidos;
+    }
+
+    // Metodo set
+
+    public void setClaveFuncion(String funcion) {
+        this.claveFuncion = funcion;
     }
 
 }
