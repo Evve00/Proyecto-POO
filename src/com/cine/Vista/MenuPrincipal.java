@@ -1,20 +1,23 @@
 package com.cine.Vista;
-import com.cine.ClasesPrincipales.Cliente;
+import com.cine.ClasesPrincipales.*;
 import java.util.Scanner;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Hashtable;
 public class MenuPrincipal{
-    // pa verificar si exixten los usuarios, siendo las claves sus contraseñas
-    Hashtable<String,String>Consulta = new Hashtable<>();
-
+    Hashtable<String, Persona> usuarios = new Hashtable<>();
+    Administrador elAdmin = new Administrador("a", "a", "a", "elAdministrador", "3l4dm1n", "a", "a", "a", "a", "SI");
     Scanner entrada = new Scanner(System.in);
 
+    public MenuPrincipal() {
+        usuarios.put(elAdmin.getNickname(), elAdmin);  
+        usuarios.put(elVendedor.getNickname(), elVendedor);
+    }
 
     public void menuInicio(){
-    	int eleccion;
-    	Cliente elCliente = new Cliente();
-        
+        do{
+        int eleccion;
+        Cliente elCliente = new Cliente();
 
         System.out.println("Inicio");
         System.out.println("1.- Nuevo registro de cliente.");
@@ -22,20 +25,20 @@ public class MenuPrincipal{
         eleccion = entrada.nextInt();
 
         if (eleccion == 1){
-        	menuNuevoRegistroDeCliente(elCliente);
+            menuNuevoRegistroDeCliente(elCliente);
         }else if(eleccion ==2){
             IngresoAlSistema();
         }else{
             System.out.println("Opcion invalida....");
         }
-
+    }while(true);
     }
 
     public void menuNuevoRegistroDeCliente(Cliente unCliente){
 
         boolean bandera = true;
         String Respuesta;
-    	entrada.nextLine();
+        entrada.nextLine();
 
         do{
         bandera = false;
@@ -71,24 +74,24 @@ public class MenuPrincipal{
 
         Respuesta = entrada.nextLine();
 
-         for(String contraseña:Consulta.keySet()){
-            if(unCliente.getContraseña().equalsIgnoreCase(contraseña)){
-                System.out.println("esa contrasena ya existe porfavor ingrese otra");
-                bandera = true;
-                break;
-            }
-             System.out.println(Consulta.get(contraseña));
-                String usuario= Consulta.get(contraseña);
-                if(unCliente.getNickname().equalsIgnoreCase(usuario)){
-                System.out.println("ese usuario ya existe porfavor ingrese otro");
-                bandera = true;
-                break;
-        }
-    }// del for
+if (usuarios.containsKey(unCliente.getNickname())) {
+    System.out.println("Ese nickname ya existe, ingresa otro.");
+    bandera = true;
+}
+
+for (Persona p : usuarios.values()) {
+    if (p.getContraseña().equalsIgnoreCase(unCliente.getContraseña())) {
+        System.out.println("Esa contraseña ya existe, ingresa otra.");
+        bandera = true;
+        break;
+    }
+}
+
         
         
     }while(Respuesta.equalsIgnoreCase("no") || bandera==true);
-    Consulta.put(unCliente.getContraseña(),unCliente.getNickname());
+    usuarios.put(unCliente.getNickname(), unCliente);
+
     try{
     Registros unrRegistro = new Registros();
     unrRegistro.Registro(unCliente);
@@ -100,39 +103,66 @@ public class MenuPrincipal{
     System.out.println("La informacion se aguardo correctamente:)");
    }
 
-   public void IngresoAlSistema(){
+public void IngresoAlSistema() {
     String contraseña, nickname;
-    boolean bandera = true;
     entrada.nextLine();
 
-    if(Consulta.size() == 0){
-        System.out.println("Aun no hay ningun usuario registrado");
+    if (usuarios.size() == 0) {
+        System.out.println("Aun no hay ningún usuario registrado");
+        return;
     }
 
-    else{
-    do{
-    System.out.println("-----------------------Login---------------------------");
-    System.out.println("Nickname:");
-    nickname = entrada.nextLine();
-    System.out.println("Contraseña:");
-    contraseña = entrada.nextLine();
-    if(Consulta.containsKey(contraseña)){
-        if(Consulta.get(contraseña).equalsIgnoreCase(nickname)){
-            System.out.println("se loguea xd");
-            bandera = false;
-            break;
-        }else{
-            System.out.println("La contrasenia no corresponde al usuario..");
-            bandera = true;
-        }// del else si el usuario esta mal
-    }else{
-        System.out.println("Verifique que su contrasenia este bien...");
-        bandera= true;
-    }// del else si es que la contrasenia esta mal
-    }while(bandera);
+    while (true) {
+        System.out.println("-----------------------Login---------------------------");
+        System.out.println("Nickname:");
+        nickname = entrada.nextLine();
 
-    }//del else para verificar si la hay usuarios registrados
-   }// del metodo
+        System.out.println("Contraseña:");
+        contraseña = entrada.nextLine();
 
+        if (usuarios.containsKey(nickname)) {
 
+            Persona p = usuarios.get(nickname);
+
+            if (p.getContraseña().equals(contraseña)) {
+
+                System.out.println("Inicio de sesión exitoso.\n");
+
+                if (p instanceof Administrador) {
+                    menuAdministrador((Administrador)p);
+                } else if (p instanceof Vendedor) {
+                    menuVendedor((Vendedor)p);
+                } else if (p instanceof Cliente) {
+                    menuCliente((Cliente)p);
+                }
+
+                break;
+
+            } else {
+                System.out.println("Contraseña incorrecta.");
+            }
+
+        } else {
+            System.out.println("El nickname no existe.");
+        }
+    }
+}
+
+public void menuAdministrador(Administrador admin) {
+    System.out.println("=== MENU ADMINISTRADOR ===");
+    System.out.println("1. Registrar nuevo administrador");
+    System.out.println("2. Registrar nuevo vendedor");
+    System.out.println("3. Ver usuarios");
+    System.out.println("4. Salir");
+}
+
+public void menuVendedor(Vendedor vendedor) {
+    System.out.println("=== MENU VENDEDOR ===");
+    System.out.println("Aquí van las opciones del vendedor...");
+}
+
+public void menuCliente(Cliente cliente) {
+    System.out.println("=== MENU CLIENTE ===");
+    System.out.println("Aquí van las opciones del cliente...");
+}
 }
