@@ -1,5 +1,5 @@
 package com.cine.Controlador;
-
+import java.io.*;
 import com.cine.ClasesPrincipales.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -30,7 +30,7 @@ public class ControlBoletosCartelera {
      */
 
     public void mostrarPeliculas() {
-        int i = 1;
+        int i = 0;
         for (Pelicula p : peliculas) {
             System.out.println(i + ". " + p.getNombreDeLaPelicula());
             i++;
@@ -125,9 +125,8 @@ public class ControlBoletosCartelera {
      * @param Pelicula recibe el objeto de tipo pelicula, no el nombre
      */
 
-    public void mostrarInformacionPeliculas(Pelicula pelicula) {
-        System.out.println(pelicula.toString());
-
+    public void mostrarInformacionPeliculas(Pelicula p) {
+        System.out.println(p.toString());// pa que me muestra la que quiero
     }
 
     /**

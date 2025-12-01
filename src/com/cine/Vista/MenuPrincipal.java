@@ -3,6 +3,8 @@ import com.cine.ClasesPrincipales.*;
 import com.cine.Controlador.*;
 import java.util.Scanner;
 import java.io.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Hashtable;
 public class MenuPrincipal{
@@ -166,6 +168,7 @@ public void menuAdministrador(Administrador admin) {
             case 1:
                 // método para registrar pelicula
                 System.out.println("Dar de alta una película...");
+            
                 break;
 
             case 2:
@@ -224,6 +227,19 @@ public void menuVendedor(Vendedor vendedor) {
 
 public void menuCliente(Cliente cliente) {
     int opcion;
+    // pruebas....
+    ControlBoletosCartelera unBoleto = new ControlBoletosCartelera();
+   Pelicula unPelicula = new Pelicula("resplandor", "misterio", "Se mueren todos", "02:30");
+   Pelicula otraPelicula = new Pelicula("IT", "terror", "Se come a los ninios", "01:40");
+   unBoleto.registrarPelicula(otraPelicula);
+	unBoleto.registrarPelicula(unPelicula);
+    SalaA sala = new SalaA();
+    try{
+    unBoleto.registrarFuncion(otraPelicula, sala, LocalDate.of(2026,9,5), LocalTime.of(12, 0, 0));
+    }catch(ExcepcionFunciones e){
+        System.out.println(e.toString());
+    }
+        // peliculas de pruebaas...
 
     while (true) {
         System.out.println("=== MENU CLIENTE ===");
@@ -238,7 +254,25 @@ public void menuCliente(Cliente cliente) {
 
         switch (opcion) {
             case 1:
+                int Opcion;
+                String Respuesta;
+                do{
                 System.out.println("Mostrando lista de películas programadas...");
+                unBoleto.mostrarPeliculasProgramadas();
+                System.out.println("Opcion:");
+                if(entrada.hasNextInt()){// pa ver que escribe
+                    Opcion = entrada.nextInt();
+                    unBoleto.mostrarInformacionPeliculas(Opcion);
+                }else{
+                Respuesta = entrada.nextLine();
+                if(Respuesta.equalsIgnoreCase("Regresar")){
+                    break;
+                }// del if regresar
+                else{
+                    System.out.println("Opcion invalida");
+                }
+            }// del else
+            }while (true);
                 break;
 
             case 2:
