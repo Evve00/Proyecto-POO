@@ -1,5 +1,6 @@
 package com.cine.Vista;
 import com.cine.ClasesPrincipales.*;
+import com.cine.Controlador.*;
 import java.util.Scanner;
 import java.io.*;
 import java.util.ArrayList;
@@ -11,7 +12,6 @@ public class MenuPrincipal{
 
     public MenuPrincipal() {
         usuarios.put(elAdmin.getNickname(), elAdmin);  
-        usuarios.put(elVendedor.getNickname(), elVendedor);
     }
 
     public void menuInicio(){
@@ -149,20 +149,118 @@ public void IngresoAlSistema() {
 }
 
 public void menuAdministrador(Administrador admin) {
-    System.out.println("=== MENU ADMINISTRADOR ===");
-    System.out.println("1. Registrar nuevo administrador");
-    System.out.println("2. Registrar nuevo vendedor");
-    System.out.println("3. Ver usuarios");
-    System.out.println("4. Salir");
+    int opcion;
+
+    while (true) {
+        System.out.println("=== MENU ADMINISTRADOR ===");
+        System.out.println("1. Dar de alta una pelicula");
+        System.out.println("2. Dar de alta una funcion");
+        System.out.println("3. Registrar una nueva cuenta de empleado");
+        System.out.println("4. Ver las películas para las que un cliente ha comprado boletos");
+        System.out.println("5. Salir de sesión");
+
+        opcion = entrada.nextInt();
+        entrada.nextLine();
+
+        switch (opcion) {
+            case 1:
+                // método para registrar pelicula
+                System.out.println("Dar de alta una película...");
+                break;
+
+            case 2:
+                // método para registrar función
+                System.out.println("Dar de alta una función...");
+                break;
+
+            case 3:
+                // registrar cuenta de vendedor o admin
+                System.out.println("Registrar una nueva cuenta de empleado...");
+                break;
+
+            case 4:
+                // ver películas compradas por un cliente
+                System.out.println("Ver películas compradas por un cliente...");
+                break;
+
+            case 5:
+                System.out.println("Cerrando sesión...");
+                return; // regresa al menú principal
+
+            default:
+                System.out.println("Opción inválida.");
+        }
+    }
 }
+
 
 public void menuVendedor(Vendedor vendedor) {
-    System.out.println("=== MENU VENDEDOR ===");
-    System.out.println("Aquí van las opciones del vendedor...");
+    int opcion;
+
+    while (true) {
+        System.out.println("=== MENU VENDEDOR ===");
+        System.out.println("1.- Mostrar lista de peliculas programadas");
+        System.out.println("2.- Salir de sesión");
+
+        opcion = entrada.nextInt();
+        entrada.nextLine();
+
+        switch (opcion) {
+            case 1:
+                // mostrar películas programadas
+                System.out.println("Mostrando lista de películas programadas...");
+                break;
+
+            case 2:
+                System.out.println("Cerrando sesión...");
+                return;
+
+            default:
+                System.out.println("Opción inválida.");
+        }
+    }
 }
 
+
 public void menuCliente(Cliente cliente) {
-    System.out.println("=== MENU CLIENTE ===");
-    System.out.println("Aquí van las opciones del cliente...");
+    int opcion;
+
+    while (true) {
+        System.out.println("=== MENU CLIENTE ===");
+        System.out.println("1.- Mostrar lista de peliculas programadas");
+        System.out.println("2.- Compra de boletos para una funcion");
+        System.out.println("3.- Comprar en dulcería");
+        System.out.println("4.- Revisar notificaciones");
+        System.out.println("5.- Salir de sesión");
+
+        opcion = entrada.nextInt();
+        entrada.nextLine();
+
+        switch (opcion) {
+            case 1:
+                System.out.println("Mostrando lista de películas programadas...");
+                break;
+
+            case 2:
+                System.out.println("Compra de boletos...");
+                break;
+
+            case 3:
+                System.out.println("Comprando en dulcería...");
+                break;
+
+            case 4:
+                System.out.println("Revisando notificaciones...");
+                break;
+
+            case 5:
+                System.out.println("Cerrando sesión...");
+                return;
+
+            default:
+                System.out.println("Opción inválida.");
+        }
+    }
 }
+
 }
