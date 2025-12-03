@@ -6,6 +6,9 @@ public class Cliente extends Persona {
     Scanner entrada = new Scanner(System.in);
     private String tarjeta;
     ArrayList<Boleto>historial= new ArrayList<>();
+    ArrayList<String>Ordenes = new ArrayList<>();
+     private String archv;
+     private String Notfi;
 
     public Cliente(String nombre, String apellidoPaterno, String apellidoMaterno,
                    String nickname, String contraseña, String correo,
@@ -44,6 +47,34 @@ public class Cliente extends Persona {
         System.out.println("Seleccione una opcion para ver informacion completa:");
         int j = entrada.nextInt();
         System.out.println(historial.get(j).toString());
+    }
+    public void Ordenar(String clav){
+        Ordenes.add(clav);
+    }
+    public String mostrarclv(){
+        int i=0;
+        int op;
+        for(String f: Ordenes){
+            System.out.println(i+":"+f);
+            i++;
+        }
+        System.out.println("Seleccione un numero para ver estado de la orden:");
+        op = entrada.nextInt();
+        return Ordenes.get(op);
+
+
+    }
+    public void setArchv(String arch){
+        this.archv = arch;
+    }
+    public String getArchv(){
+        return this.archv;
+    }
+    public void setNotf(String N){
+        this.Notfi = N;
+    }
+    public String getNotf(){
+        return this.Notfi;
     }
 
 

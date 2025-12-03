@@ -38,11 +38,12 @@ public class Vendedor extends Empleado {
      * @param diaDescanso     Dia de descanso del vendedor
      */
     public Vendedor(String nombre, String apellidoPaterno, String apellidoMaterno, String nickname, String contraseña,
-            String correo, String celular, String edad, String turno, String diaDescanso) {
+            String correo, String celular, String edad, String turno, String diaDescanso,Cliente uCliente) {
 
         super(nombre, apellidoPaterno, apellidoMaterno, nickname, contraseña, correo, celular, edad, turno);
         this.diaDescanso = diaDescanso;
         this.archivoHistorial = "historial" + nickname + ".txt";
+        uCliente.setArchv(archivoHistorial);
         crearArchivoHistorial();
     }
 
@@ -63,7 +64,7 @@ public class Vendedor extends Empleado {
      * @param codigoCompra    El codigo de la compra hecha por el cliente
      * @param nicknameCliente El nickname del cliente
      */
-    public void atenderPedido(OrdenDulceria orden, String codigoCompra, String nicknameCliente) {
+    public void atenderPedido(OrdenDulceria orden, String codigoCompra, String nicknameCliente,Cliente uCliente) {
         Thread hiloPreparacion = new Thread(new Runnable() {
             public void run() {
                 LocalDateTime fechaPedido = LocalDateTime.now();
@@ -85,7 +86,7 @@ public class Vendedor extends Empleado {
                     LocalDateTime fechaFin = LocalDateTime.now();
                     actualizarHistorial("Se termino el pedido", fechaFin, orden.getTipo(), codigoCompra, fechaPedido);
 
-                    actualizarNotificacionCliente(nicknameCliente, codigoCompra, fechaFin);
+                    actualizarNotificacionCliente(nicknameCliente, codigoCompra, fechaFin,uCliente);
                 } catch (InterruptedException e) {
                     System.out.println("Error en la preparacion:( " + e.getMessage());
                 }
@@ -140,8 +141,9 @@ public class Vendedor extends Empleado {
      * @param fechaTerminacion Fecha en que se terminó de preparar la compra/pedido
      */
     private void actualizarNotificacionCliente(String nicknameCliente, String codigoCompra,
-            LocalDateTime fechaTerminacion) {
+            LocalDateTime fechaTerminacion,Cliente uCliente) {
         String archivoNotificacion = "notificacion" + nicknameCliente + ".txt";
+        uCliente.setNotf(archivoNotificacion);
 
         try (FileWriter fw = new FileWriter(archivoNotificacion);
                 BufferedWriter bw = new BufferedWriter(fw)) {

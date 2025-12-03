@@ -227,23 +227,12 @@ public void menuVendedor(Vendedor vendedor) {
 }
 
 
-public void menuCliente(Cliente cliente) {
+public void menuCliente(Cliente cliente,Vendedor unVendedor) {
     ArrayList <Funcion>Tem = new ArrayList<>();
     SubmenuNotificaciones unmenu= new SubmenuNotificaciones();
 
     int opcion;
-    // pruebas....
-  //  ControlBoletosCartelera unBoleto = new ControlBoletosCartelera();
-   Pelicula unPelicula = new Pelicula("resplandor", "misterio", "Se mueren todos", "02:30");
-   Pelicula otraPelicula = new Pelicula("IT", "terror", "Se come a los ninios", "01:40");
-    SalaA sala = new SalaA();
-    try{
-       unBoleto.registrarFuncion(unPelicula, sala, LocalDate.of(2000,5,3), LocalTime.of(13,0,0)); 
-       unBoleto.registrarFuncion(otraPelicula, sala, LocalDate.of(2026,9,5), LocalTime.of(12, 0, 0));
-    }catch(ExcepcionFunciones e){
-        System.out.println(e.toString());
-    }
-        // peliculas de pruebaas...
+
 
     while (true) {
         System.out.println("=== MENU CLIENTE ===");
@@ -339,10 +328,8 @@ public void menuCliente(Cliente cliente) {
                 break;
 
             case 3:
-                String Orden;
-                Vendedor unvVendedor = new Vendedor("s", "s", "s", "s", "s", "s", "s", "s", "s", "s");
-                ControlDulceria unOrden = new ControlDulceria(unvVendedor);
-                unOrden.obtenerOrden(cliente.getNombre(),cliente.getApellidoPaterno(), cliente.getApellidoMaterno());
+                ControlDulceria unOrden = new ControlDulceria(unVendedor);
+                unOrden.obtenerOrden(cliente.getNombre(),cliente.getApellidoPaterno(), cliente.getApellidoMaterno(),cliente);
                 break;
 
             case 4:
