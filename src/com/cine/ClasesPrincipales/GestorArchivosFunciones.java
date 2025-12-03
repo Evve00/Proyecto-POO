@@ -64,7 +64,7 @@ public class GestorArchivosFunciones {
     // solo necesita a el objeto de tipo control para cargar datos, los busca en el
     // directorio
 
-    public static void cargarDatos(ControlBoletosCartelera control) {
+    public static void cargarDatos(ControlBoletosCartelera control,Cliente uCliente) {
         File carpeta = new File(RUTA_BASE);
 
         // Filtra solo los archivos de funciones
@@ -72,13 +72,13 @@ public class GestorArchivosFunciones {
 
         if (archivos != null) {
             for (File archivo : archivos) {
-                cargarArchivoIndividual(archivo, control);
+                cargarArchivoIndividual(archivo, control,uCliente);
             }
         }
     }
 
     // carga todas las funciones(peliculas y boletos) que estan en los archivos
-    private static void cargarArchivoIndividual(File archivo, ControlBoletosCartelera control) {
+    private static void cargarArchivoIndividual(File archivo, ControlBoletosCartelera control, Cliente uCliente) {
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
 
             String linea;
@@ -152,7 +152,7 @@ public class GestorArchivosFunciones {
                             }
                             String[] partes = lineaAsiento.split(":");
                             if (partes.length == 2 && partes[1].equalsIgnoreCase("Vendido")) {
-                                funcion.venderBoleto(partes[0]);
+                                funcion.venderBoleto(partes[0],uCliente);
                             }
                         }
                     }

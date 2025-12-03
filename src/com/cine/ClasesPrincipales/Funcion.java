@@ -105,7 +105,7 @@ public class Funcion {
      * @return true si la venta fue exitosa, false si el asiento no existe o ya está
      *         vendido
      */
-    public boolean venderBoleto(String asiento) {
+    public boolean venderBoleto(String asiento,Cliente uCliente) {
 
         // Buscar en la lista de boletos totales
         for (Boleto b : boletosTotales) {
@@ -119,6 +119,7 @@ public class Funcion {
 
                 // se agrega a vendidos
                 boletosVendidos.add(b);
+                uCliente.compra(b);
 
                 return true; // Venta exitosa
             }

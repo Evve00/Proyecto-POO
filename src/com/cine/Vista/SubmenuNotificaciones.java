@@ -2,8 +2,10 @@ package com.cine.Vista;
 
 import java.util.Scanner;
 
+import com.cine.ClasesPrincipales.Cliente;
+
 public class SubmenuNotificaciones {
-    public void mostrarSubmenu() {
+    public void mostrarSubmenu(Cliente uncliente) {
         boolean continuar = true;
         Scanner entrada = new Scanner(System.in);
         String opcion;
@@ -14,11 +16,14 @@ public class SubmenuNotificaciones {
         switch (opcion) {
             case "A":
                 // controlUsuario.mostrarHistorialBoletos(usuarioActual);
-                System.out.println("Mostrando lista de funciones compradas..."); // Placeholder
+                System.out.println("Mostrando lista de funciones compradas...");
+                uncliente.mostrarFunciones(); // Placeholder
+
                 break;
             case "B":
                 // controlDulceria.verEstadoDulceria(usuarioActual);
-                System.out.println("Mostrando estado de pedidos de dulcería..."); // Placeholder
+                System.out.println("Mostrando estado de pedidos de dulcería...");// Placeholder
+                
                 break;
             case "R":
                 continuar = false;

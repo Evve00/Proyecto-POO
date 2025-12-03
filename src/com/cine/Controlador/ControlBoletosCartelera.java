@@ -348,7 +348,7 @@ public class ControlBoletosCartelera {
      * @return True si se pudieron comprar los boletos
      */
 
-    public boolean comprarBoletos(Funcion funcion, String asientoSeleccionados) {
+    public boolean comprarBoletos(Funcion funcion, String asientoSeleccionados,Cliente uCliente) {
         asientoSeleccionados = asientoSeleccionados.trim();
         String[] asientos = asientoSeleccionados.split("\\s+");
 
@@ -356,13 +356,13 @@ public class ControlBoletosCartelera {
         for (String asiento : asientos) {
             if (!funcion.estaDisponible(asiento)) {
                 System.out.println("El asiento " + asiento + " ya está vendido.");
-                return true;
+                return false;
             }
         }
 
         // SI no hay vendidos, se venden todos
         for (String asiento : asientos) {
-            funcion.venderBoleto(asiento);
+           funcion.venderBoleto(asiento,uCliente);
         }
 
         // si los boletos estaban disponibles, se ponen en la lista de boletos vendidos
@@ -370,10 +370,11 @@ public class ControlBoletosCartelera {
         // se llama al metodo de cargo bancario de una vez
         cargoBancario();
 
+
         // muestra el resumen de compra al final
         resumenDeCompra(funcion, asientos);
 
-        return false;
+        return true;
     }
 
     /**
@@ -414,10 +415,12 @@ public class ControlBoletosCartelera {
 
         List<Boleto> vendidos = funcion.getBoletosVendidos();
 
+
         for (String buscado : asientosComprados) {
             for (Boleto b : vendidos) {
                 if (b.getAsiento().equalsIgnoreCase(buscado)) {
                     System.out.println("Clave: " + b.getClaveBoleto());
+
                 }
             }
         }

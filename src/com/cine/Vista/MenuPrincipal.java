@@ -99,7 +99,7 @@ for (Persona p : usuarios.values()) {
     try{
     Registros unrRegistro = new Registros();
     unrRegistro.Registro(unCliente);
-   Thread.sleep(5000);
+   Thread.sleep(1000);
     }catch(InterruptedException e){
         System.out.println(e.toString());
     }// del catch 
@@ -229,6 +229,7 @@ public void menuVendedor(Vendedor vendedor) {
 
 public void menuCliente(Cliente cliente) {
     ArrayList <Funcion>Tem = new ArrayList<>();
+    SubmenuNotificaciones unmenu= new SubmenuNotificaciones();
 
     int opcion;
     // pruebas....
@@ -311,7 +312,7 @@ public void menuCliente(Cliente cliente) {
                        System.out.println("Ingrese los asientos que desea comprar, Ejemplo (H7, H8, H9):");
 
                       String asientos = entrada.nextLine();
-                      bandera =unBoleto.comprarBoletos(Tem.get(num-1),asientos);
+                      bandera =unBoleto.comprarBoletos(Tem.get(num-1),asientos,cliente);
                     }while(bandera);
                 }
                     if(Tem.get(num-1).getSala() instanceof SalaB){
@@ -321,7 +322,7 @@ public void menuCliente(Cliente cliente) {
                          System.out.println("Ingrese los asientos que desea comprar, Ejemplo (H7, H8, H9):");
 
                          String asientos = entrada.nextLine();
-                         bandera =unBoleto.comprarBoletos(Tem.get(num-1),asientos);
+                         bandera =unBoleto.comprarBoletos(Tem.get(num-1),asientos,cliente);
                     }while(bandera);
                 }
                     if(Tem.get(num-1).getSala() instanceof SalaVip){
@@ -330,7 +331,7 @@ public void menuCliente(Cliente cliente) {
                          unBoleto.mostrarAsientosSalaVip(Tem.get(num-1));
                          System.out.println("Ingrese los asientos que desea comprar, Ejemplo (H7, H8, H9):");
                          String asientos = entrada.nextLine();
-                         bandera =unBoleto.comprarBoletos(Tem.get(num-1),asientos);
+                         bandera =unBoleto.comprarBoletos(Tem.get(num-1),asientos,cliente);
                     }while(bandera);
                 }
                  
@@ -338,11 +339,16 @@ public void menuCliente(Cliente cliente) {
                 break;
 
             case 3:
-                System.out.println("Comprando en dulcería...");
+                String Orden;
+                Vendedor unvVendedor = new Vendedor("s", "s", "s", "s", "s", "s", "s", "s", "s", "s");
+                ControlDulceria unOrden = new ControlDulceria(unvVendedor);
+                unOrden.obtenerOrden(cliente.getNombre(),cliente.getApellidoPaterno(), cliente.getApellidoMaterno());
                 break;
 
             case 4:
                 System.out.println("Revisando notificaciones...");
+                unmenu.mostrarSubmenu(cliente);
+
                 break;
 
             case 5:

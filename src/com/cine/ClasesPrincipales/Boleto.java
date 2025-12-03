@@ -115,5 +115,15 @@ public class Boleto {
     public void setClave(String claveBoleto) {
         this.claveBoleto = claveBoleto;
     }
+    public String toString(){
+        return "Pelicula:"+nombreDeLaPelicula+
+               "Fecha:"+fecha+
+               "Hora:"+hora+
+               "Tipo de sala:"+tipoDeSala+
+               "Asiento:"+asiento+
+               "Precio:"+precio+
+               "Clave:"+claveBoleto;
+
+    }
 
 }
