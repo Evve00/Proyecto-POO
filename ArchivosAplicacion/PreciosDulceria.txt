@@ -1,0 +1,11 @@
+Palomitas medianas:78
+Palomitas grandes:83
+Palomitas jumbo:99
+Palomitas mega:129
+Refresco mediano:60
+Refresco grande:70
+Refresco jumbo:80
+Refresco mega:95
+Nachos personal:65
+Nachos jumbo:80
+Nachos mega:90
