@@ -121,7 +121,7 @@ public class ControlDulceria {
      * @param apellidoP Apellido paterno del cliente
      * @param apellidoM Apellido materno del cliente
      */
-    public void obtenerOrden(String nombre, String apellidoP, String apellidoM) {
+    public void obtenerOrden(String nombre, String apellidoP, String apellidoM,Cliente uncliente) {
         String orden1;
         dulceria.generarOrden();
         System.out.println("Precio a pagar: " + dulceria.getTotal());
@@ -159,8 +159,10 @@ public class ControlDulceria {
         if (nicknameCliente.equals("")) {
             nicknameCliente = "Esta vacioooooooooooo aaaaaa";
         }
+        uncliente.Ordenar(codigo);
+        
 
-        vendedorActual.atenderPedido(dulceria, this.codigo, nicknameCliente);
+        vendedorActual.atenderPedido(dulceria, this.codigo, nicknameCliente,uncliente);
         System.out.println("Revisa la seccio de notificaciones para saber cuando tu orden este lista =)");
         this.ordenFinal = orden1;
     }
