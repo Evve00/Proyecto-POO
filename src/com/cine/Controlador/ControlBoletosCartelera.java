@@ -125,9 +125,13 @@ public class ControlBoletosCartelera {
      * @param Pelicula recibe el objeto de tipo pelicula, no el nombre
      */
 
-    public void mostrarInformacionPeliculas(Pelicula p) {
-        System.out.println(p.toString());// pa que me muestra la que quiero
-    }
+    public void mostrarInformacionPeliculas(int Opcion) {
+        if(Opcion >= funciones.size()){
+            System.out.println("Opcion invalida");
+        }else{
+        System.out.println(funciones.get(Opcion).toString());// pa que me muestra la que quiero
+       }
+}
 
     /**
      * Metodo para mostrar las funciones segun una fecha dada
@@ -136,7 +140,8 @@ public class ControlBoletosCartelera {
      * @param fecha recibe una fecha, para mostrar las funciones de ese dia
      */
 
-    public void mostrarFuncionesProgamadasParaUnaFecha(LocalDate fecha) {
+    public ArrayList mostrarFuncionesProgamadasParaUnaFecha(LocalDate fecha) {
+        ArrayList <Funcion>lista = new ArrayList<>();
         System.out.println("Funciones programadas:");
         int i = 1;
         for (Funcion f : funciones) {
@@ -147,9 +152,11 @@ public class ControlBoletosCartelera {
                 System.out.println(". " + f.getHorario());
                 System.out.println(". " + f.getSala().getTipoDeSala());
                 System.out.println("--------------------");
+                lista.add(f);
                 i += 1;
-            }
+            }       
         }
+        return lista;
     }
 
     /**
@@ -349,7 +356,7 @@ public class ControlBoletosCartelera {
         for (String asiento : asientos) {
             if (!funcion.estaDisponible(asiento)) {
                 System.out.println("El asiento " + asiento + " ya está vendido.");
-                return false;
+                return true;
             }
         }
 
@@ -366,7 +373,7 @@ public class ControlBoletosCartelera {
         // muestra el resumen de compra al final
         resumenDeCompra(funcion, asientos);
 
-        return true;
+        return false;
     }
 
     /**

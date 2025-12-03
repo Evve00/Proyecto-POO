@@ -11,6 +11,8 @@ public class MenuPrincipal{
     Hashtable<String, Persona> usuarios = new Hashtable<>();
     Administrador elAdmin = new Administrador("a", "a", "a", "elAdministrador", "3l4dm1n", "a", "a", "a", "a", "SI");
     Scanner entrada = new Scanner(System.in);
+    ControlBoletosCartelera unBoleto = new ControlBoletosCartelera();
+
 
     public MenuPrincipal() {
         usuarios.put(elAdmin.getNickname(), elAdmin);  
@@ -226,16 +228,17 @@ public void menuVendedor(Vendedor vendedor) {
 
 
 public void menuCliente(Cliente cliente) {
+    ArrayList <Funcion>Tem = new ArrayList<>();
+
     int opcion;
     // pruebas....
-    ControlBoletosCartelera unBoleto = new ControlBoletosCartelera();
+  //  ControlBoletosCartelera unBoleto = new ControlBoletosCartelera();
    Pelicula unPelicula = new Pelicula("resplandor", "misterio", "Se mueren todos", "02:30");
    Pelicula otraPelicula = new Pelicula("IT", "terror", "Se come a los ninios", "01:40");
-   unBoleto.registrarPelicula(otraPelicula);
-	unBoleto.registrarPelicula(unPelicula);
     SalaA sala = new SalaA();
     try{
-    unBoleto.registrarFuncion(otraPelicula, sala, LocalDate.of(2026,9,5), LocalTime.of(12, 0, 0));
+       unBoleto.registrarFuncion(unPelicula, sala, LocalDate.of(2000,5,3), LocalTime.of(13,0,0)); 
+       unBoleto.registrarFuncion(otraPelicula, sala, LocalDate.of(2026,9,5), LocalTime.of(12, 0, 0));
     }catch(ExcepcionFunciones e){
         System.out.println(e.toString());
     }
@@ -263,6 +266,10 @@ public void menuCliente(Cliente cliente) {
                 if(entrada.hasNextInt()){// pa ver que escribe
                     Opcion = entrada.nextInt();
                     unBoleto.mostrarInformacionPeliculas(Opcion);
+                    System.out.println("Presione enter para seguir.......");
+                    entrada.nextLine();
+                    entrada.nextLine();
+                    System.out.println("------------------------------------------------------");
                 }else{
                 Respuesta = entrada.nextLine();
                 if(Respuesta.equalsIgnoreCase("Regresar")){
@@ -276,7 +283,58 @@ public void menuCliente(Cliente cliente) {
                 break;
 
             case 2:
+                int num;
+                //ArrayList <Funcion>Tem = new ArrayList<>();
                 System.out.println("Compra de boletos...");
+                System.out.println("Para que fecha desea comprar las entradas (AAAA-MM-DD):");
+                String Fecha= entrada.nextLine();
+                LocalDate fecha = LocalDate.parse(Fecha);
+
+                Tem = unBoleto.mostrarFuncionesProgamadasParaUnaFecha(fecha);
+                
+                System.out.println("------------------------------------------------------");
+                
+                System.out.println("Ingrese el numero de la pelicula para comprar boletos \nIngrese 0 si desea regresar:");
+                
+                num =entrada.nextInt();
+                
+                entrada.nextLine();
+                
+                if(num == 0){
+                    break;
+                }else{
+
+                    if(Tem.get(num-1).getSala() instanceof SalaA){
+                        boolean bandera;
+                        do{
+                      unBoleto.mostrarAsientosSalaA(Tem.get(num-1));
+                       System.out.println("Ingrese los asientos que desea comprar, Ejemplo (H7, H8, H9):");
+
+                      String asientos = entrada.nextLine();
+                      bandera =unBoleto.comprarBoletos(Tem.get(num-1),asientos);
+                    }while(bandera);
+                }
+                    if(Tem.get(num-1).getSala() instanceof SalaB){
+                        boolean bandera;
+                        do{
+                         unBoleto.mostrarAsientosSalaB(Tem.get(num-1));
+                         System.out.println("Ingrese los asientos que desea comprar, Ejemplo (H7, H8, H9):");
+
+                         String asientos = entrada.nextLine();
+                         bandera =unBoleto.comprarBoletos(Tem.get(num-1),asientos);
+                    }while(bandera);
+                }
+                    if(Tem.get(num-1).getSala() instanceof SalaVip){
+                        boolean bandera;
+                        do{
+                         unBoleto.mostrarAsientosSalaVip(Tem.get(num-1));
+                         System.out.println("Ingrese los asientos que desea comprar, Ejemplo (H7, H8, H9):");
+                         String asientos = entrada.nextLine();
+                         bandera =unBoleto.comprarBoletos(Tem.get(num-1),asientos);
+                    }while(bandera);
+                }
+                 
+                }
                 break;
 
             case 3:
